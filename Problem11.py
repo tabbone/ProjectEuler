@@ -27,7 +27,9 @@ line have been marked in red.</p>
 
 """
 import numpy as np
-grid = np.array([
+import math
+
+grid = [
     [ 8,  2, 22, 97, 38, 15,  0, 40,  0, 75,  4,  5,  7, 78, 52, 12, 50, 77, 91,  8],
     [49, 49, 99, 40, 17, 81, 18, 57, 60, 87, 17, 40, 98, 43, 69, 48,  4, 56, 62,  0],
     [81, 49, 31, 73, 55, 79, 14, 29, 93, 71, 40, 67, 53, 88, 30,  3, 49, 13, 36, 65],
@@ -48,11 +50,12 @@ grid = np.array([
     [20, 69, 36, 41, 72, 30, 23, 88, 34, 62, 99, 69, 82, 67, 59, 85, 74,  4, 36, 16],
     [20, 73, 35, 29, 78, 31, 90,  1, 74, 31, 49, 71, 48, 86, 81, 16, 23, 57,  5, 54],
     [ 1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52,  1, 89, 19, 67, 48]
-])
+]
+np_grid = np.array(grid)
 
 def h_prod(x,y,span):
     max = 0
-    sub_m = grid[x:x+span,y:y+span]
+    sub_m = np_grid[x:x+span,y:y+span]
 
     max = 0
     for row in sub_m:
@@ -63,7 +66,7 @@ def h_prod(x,y,span):
 
 def v_prod(x,y,span):
     max = 0
-    sub_m = grid[x:x+span,y:y+span]
+    sub_m = np_grid[x:x+span,y:y+span]
     sub_m2 = sub_m.T
 
 
@@ -76,7 +79,7 @@ def v_prod(x,y,span):
 
 def d_prod(x,y,span):
     max = 0
-    sub_m = grid[x:x+span,y:y+span]
+    sub_m = np_grid[x:x+span,y:y+span]
         
     max = np.prod(sub_m.diagonal())
     max2 = np.prod(np.fliplr(sub_m).diagonal())
@@ -87,17 +90,41 @@ def d_prod(x,y,span):
         return max2
     
 def print_sub_m(x,y,span):
-    print(grid[x:x+span,y:y+span])
+    print(np_grid[x:x+span,y:y+span])
+
+def get_sub_m2(x,y,span):
+        sub_grid = [row[x:x+span] for row in grid[y:y+span]]
+        return sub_grid
+        #print(sub_grid)
+
+def h_prod2(x,y,span):
+    sub_grid = get_sub_m2(x,y,span)
+    max = 0
+    for row in sub_grid:
+        tmp = math.prod(row)
+        if tmp > max:
+            max = tmp
+    return tmp
+
+def v_prod2(x,y,span):
+    sub_grid = get_sub_m2(x,y,span)
+    max = 0
+    for row in sub_grid:
+        tmp = math.prod(row)
+        if tmp > max:
+            max = tmp
+    return tmp
+
 
 
 
 if __name__ == "__main__":
-    i=0
-    j=2
+    i=16
+    j=16
     span=4
-    print_sub_m(i,j,span)
-    print(d_prod(i,j,span))
- #   exit()
+    print(get_sub_m2(i,j,span))
+    #print(d_prod(i,j,span))
+    #exit()
 
 
     span = 4

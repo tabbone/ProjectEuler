@@ -9,6 +9,7 @@ $600851475143$?</p>
 if __name__ == "__main__":
     n=600851475143
     #n=13195
+    n=36
     factors = []
     d=2
     while d*d <= n:
@@ -19,3 +20,4 @@ if __name__ == "__main__":
     if n > 1:
         factors.append(n)
     print( max(factors) )
+    print(factors)
